@@ -7,7 +7,8 @@ name=input("Your name? ")
 print("Hello,",name)
 print(r.ok)
 
-for i in range(10):
-    list1=[]
-    list1.append(i)
-print(list1)
+
+
+list_of_ppl=["Wayne", "Esther"]
+list_of_ppl.append("Ze Xuan")
+print(list_of_ppl)
