@@ -6,6 +6,7 @@
 import random
 
 
+
 def game_setup():
     list_of_numbers=[]
     for number in range(1,101):
@@ -16,22 +17,27 @@ def game_setup():
     global comp_gen_num
     comp_gen_num=int(random_number[0])
     return comp_gen_num
-
-print(game_setup())
+comp_gen_num=game_setup()
+#print(game_setup())
 
 
 #question - how to prevent first part of code from rerunning again?
 
 #2nd portion - let user choose a number and return whether its correct
 user_number_choice=int(input("Pick a number:"))
+lowered_limit= 1
+higher_limit=100
 while user_number_choice != comp_gen_num:
     if user_number_choice < comp_gen_num:
         message="Number chosen is lower than actual"
+        lowered_limit=user_number_choice
     else:
         message="Number chosen is higher than actual"
+        higher_limit=user_number_choice
     print(message)
-    user_number_choice=int(input("Pick a number:")
+    user_number_choice=int(input(("Pick a number between {} to {}:").format(lowered_limit, higher_limit)))
+
 
 if user_number_choice == comp_gen_num:
-     message ="Congratulations, you have won"
+     message ="Congratulations, you have won, the number is "+str(comp_gen_num)
 print(message)
