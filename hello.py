@@ -14,3 +14,5 @@ list2=[]
 for i in range(10):
     list2.append(i)
 print(list2)
+
+

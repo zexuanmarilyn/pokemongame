@@ -21,14 +21,18 @@ comp_gen_num=game_setup()
 #print(game_setup())
 
 
-#question - how to prevent first part of code from rerunning again?
+
 
 #2nd portion - let user choose a number and return whether its correct
 user_number_choice=int(input("Pick a number:"))
 lowered_limit= 1
 higher_limit=100
 while user_number_choice != comp_gen_num:
-    if user_number_choice < comp_gen_num:
+    if user_number_choice < lowered_limit:
+        message="Number not within range. Please pick a higher number"
+    elif user_number_choice > higher_limit:
+        message= "Number not within range. Please pick a lower number"
+    elif user_number_choice < comp_gen_num:
         message="Number chosen is lower than actual"
         lowered_limit=user_number_choice
     else:
