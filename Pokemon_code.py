@@ -1,11 +1,14 @@
 class Pokemon:
-    def __init__(self, name, level, type, max_health, current_health, knocked_out):
+    def __init__(self, name, level, type, max_health, current_health):
         self.name=name
         self.level=level
         self.type=type
         self.max_health=max_health
         self.current_health=current_health
-        self.knocked_out=knocked_out
+        if current_health == 0:
+            self.knocked_out="Yes"
+        else:
+            self.knocked_out="No"
     
     def __repr__(self):
         return "Your {} is at level {} and has {}/{} HP.".format(self.name,self.level, self.current_health, self.max_health)
@@ -34,12 +37,16 @@ class Pokemon:
         water_dictionary={'type':'water', 'weakness':'grass', 'strength':'fire'}
         grass_dictionary={'type':'grass', 'weakness':'fire', 'strength':'water'}
         type_list= [fire_dictionary, water_dictionary, grass_dictionary]
-
+        if self.knocked_out == "Yes":
+            return "{} has already fainted and cannot fight!".format(self.name)
         for dictionary in type_list:
             dictionary_type = dictionary.get("type")
             if self.type.lower() == dictionary_type:
                 strength = dictionary.get("strength")
                 weakness = dictionary.get("weakness")
+            else:
+                strength =""
+                weakness = ""
         if strength == other_pokemon.type:
             damage = other_pokemon.level*2
         elif weakness == other_pokemon.type:
@@ -50,20 +57,65 @@ class Pokemon:
         if other_pokemon.knocked_out =="Yes":
             return ("{} has been attacked by {} and lost {} HP! {} has fainted.").format(other_pokemon.name, self.name, damage, other_pokemon.name)
         else:
-            return ("{} has been attacked by {} and lost {} HP! {} HP remains. {}").format(other_pokemon.name, self.name, damage, other_pokemon.current_health)
+            return ("{} has been attacked by {} and lost {} HP! {} HP remains.").format(other_pokemon.name, self.name, damage, other_pokemon.current_health)
 
-    #before continuing, test out the above functions with some examples and debug if needed
+
+class Trainer:
+
+    def __init__(self, name, pokemon_list, no_of_potions, active_pokemon):
+        self.name=name
+        self.pokemon_list=pokemon_list
+        self.no_of_potions=no_of_potions
+        self.active_pokemon=active_pokemon
+ #learnings: even though Pokemon and Trainer are seperate class, since variable for pokemon (Eg. Pikachu) is defined
+ # in Pokemon class already, when it is quoted in Trainer class, methods from Pokemon class can still be called for individual pokemon.   
+    def __repr__(self):
+        return "You are {}. You currently have {} and {} potions in your bag. {} is ready to fight.".format(self.name, self.pokemon_list, self.no_of_potions, self.active_pokemon)
+    
+    def potion(self):
+        self.no_of_potions-=1
+        self.pokemon_list[self.active_pokemon].gain_health(20)
+        return "{} gained 20 HP and now has {} HP. You have {} potions left.".format(self.pokemon_list[self.active_pokemon].name, self.pokemon_list[self.active_pokemon].current_health, self.no_of_potions)
+    
+    def trainer_battle(self, other_trainer):
+        return self.pokemon_list[self.active_pokemon].attack(other_trainer.pokemon_list[other_trainer.active_pokemon])
+    
+    def switch_active_pokemon(self, new_active_pokemon):
+        if self.pokemon_list[new_active_pokemon].knocked_out == "Yes":
+            return "{} has fainted and cannot be the lead pokemon.".format(self.pokemon_list[new_active_pokemon].name)
+        self.active_pokemon = new_active_pokemon
+        return "{} is now the lead pokemon.".format(self.pokemon_list[self.active_pokemon].name)
+
+    
+
+
+
 
 #example test:
-Squirtle = Pokemon("Squirtle",21,"water",100,54,"No")
-Charmander = Pokemon("Charmander", 24, "fire", 123, 43, "No")
+Squirtle = Pokemon("Squirtle",21,"water",100,54)
+Charmander = Pokemon("Charmander", 24, "fire", 123, 43)
+Bulbasaur  = Pokemon("Bulbasaur", 20, "grass", 87, 87)
+Pikachu  = Pokemon("Pikachu", 25, "electric", 100, 80)
+Torchic = Pokemon("Torchic", 30, "fire", 100, 0) 
 
 print(Squirtle)
 print(Charmander)
+print(Bulbasaur)
+print(Torchic)
 
 #battle between Squirtle and Charmander
 #Squirtle to attack first
-print(Squirtle.attack(Charmander))
+#print(Squirtle.attack(Charmander))
+
+#test trainer class
+Ash = Trainer("Ash", [Squirtle, Pikachu, Torchic], 10, 1)
+Misty = Trainer("Misty", [Bulbasaur, Charmander], 5, 0)
+
+print(Ash.potion())
+print(Ash.switch_active_pokemon(2))
+print(Ash.trainer_battle(Misty))
+
+
 
 
 
