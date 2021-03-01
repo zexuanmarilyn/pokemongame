@@ -1,12 +1,12 @@
-#build a numbers guessing game, between 1 - 100
-#computer will randomly select number
-#user to guess number. if correct, print congrats message
-#if wrong, to hint user if number is higher or lower
+# building a simple number guessing game
+# rules: the computer will randomly select a number between 1 - 100. The aim of the game is for the player to guess the number as quickly as possible. 
+# The program will hint the user if the selected number is higher or lower than the number the player guessed.
+
 
 import random
 
 
-
+# code to generate a random number
 def game_setup():
     list_of_numbers=[]
     for number in range(1,101):
@@ -18,12 +18,12 @@ def game_setup():
     comp_gen_num=int(random_number[0])
     return comp_gen_num
 comp_gen_num=game_setup()
-#print(game_setup())
 
 
 
 
-#2nd portion - let user choose a number and return whether its correct
+
+#allow user to choose a number and return response as to whether the player has guessed the correct number. If wrong number, to hint whether actual number is higher or lower.
 user_number_choice=int(input("Pick a number:"))
 lowered_limit= 1
 higher_limit=100
