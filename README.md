@@ -1,6 +1,6 @@
-# pokemon game
+## Pokemon Game - backend logic
 
-# this is an attempt at replicating some of the simpler logic in a Pokemon game, including the following features:
+### this is an attempt at replicating some of the simpler logic in a Pokemon game, including the following features:
 
 - Pokemon battle (including HP loss logic depending on Pokemon type - limited to Grass, Fire, Water type)
 - mimicing a scenario where a Pokemon has fainted
