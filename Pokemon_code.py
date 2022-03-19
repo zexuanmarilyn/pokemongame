@@ -11,7 +11,7 @@ class Pokemon:
             self.knocked_out="No"
     
     def __repr__(self):
-        return "Your {} is at level {} and has {}/{} HP.".format(self.name,self.level, self.current_health, self.max_health)
+        return "Your {} is at level {} and has {}/{} HP".format(self.name,self.level, self.current_health, self.max_health)
 
     # method for pokemon who is injured in battle
     def lose_health(self,  health_lost):
@@ -40,25 +40,26 @@ class Pokemon:
         if self.knocked_out == "Yes":
             return "{} has already fainted and cannot fight!".format(self.name)
         for dictionary in type_list:
+            strength =""
+            weakness = ""
             dictionary_type = dictionary.get("type")
             if self.type.lower() == dictionary_type:
                 strength = dictionary.get("strength")
                 weakness = dictionary.get("weakness")
-            else:
-                strength =""
-                weakness = ""
+            if strength !="":
+                break
         if strength == other_pokemon.type:
-            damage = other_pokemon.level*2
+            damage = self.level*2
         elif weakness == other_pokemon.type:
-            damage = other_pokemon.level*.5
+            damage = self.level*.5
         else:
-            damage = other_pokemon.level
+            damage = self.level
         other_pokemon.lose_health(damage)
         if other_pokemon.knocked_out =="Yes":
             return ("{} has been attacked by {} and lost {} HP! {} has fainted.").format(other_pokemon.name, self.name, damage, other_pokemon.name)
         else:
             return ("{} has been attacked by {} and lost {} HP! {} HP remains.").format(other_pokemon.name, self.name, damage, other_pokemon.current_health)
-
+            
 
 class Trainer:
 
